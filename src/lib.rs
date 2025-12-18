@@ -1,4 +1,3 @@
-#![allow(unused_variables, dead_code)]
 mod tokens;
 
 use std::{iter::Peekable, str::Chars};
@@ -98,5 +97,38 @@ impl<'a> Lexer<'a> {
             }
             _ => None,
         }
+    }
+}
+
+#[cfg(test)]
+#[test]
+fn test_tokenization() {
+    use crate::tokens::Token;
+
+    let input = "12 + 24 - (3 * 4) / 2 ^ 5 { }";
+    let mut lexer = Lexer::new(input);
+
+    let expected_tokens = vec![
+        Token::NUMBER(12),
+        Token::PLUS,
+        Token::NUMBER(24),
+        Token::MINUS,
+        Token::LPAREN,
+        Token::NUMBER(3),
+        Token::MUL,
+        Token::NUMBER(4),
+        Token::RPAREN,
+        Token::DIV,
+        Token::NUMBER(2),
+        Token::POW,
+        Token::NUMBER(5),
+        Token::LCURLY,
+        Token::RCURLY,
+        Token::EOF,
+    ];
+
+    for expected in expected_tokens {
+        let token = lexer.next_token().unwrap();
+        assert_eq!(token, expected);
     }
 }
