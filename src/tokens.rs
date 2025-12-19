@@ -1,6 +1,8 @@
 #![allow(unused_variables, dead_code)]
 
-use std::fmt::{Display, Write};
+use std::{
+    fmt::{Display, Write},
+};
 
 #[derive(Debug, PartialEq, Clone)]
 pub(super) enum Token {
